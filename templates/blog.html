@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 style="text-align:center;">🐘Build a Blog🧠</h2>
+
+<form method='POST'>
+    <label>Enter the title of your blog post: </label><br />
+        <input type="text" name="title" value='{{title_redux}}' />
+        <span class="error">{% if title_error != "" %}{{title_error}}{% endif %}</span>
+
+    <br /><br />
+    <label>Enter the body of your blog post: </label><br />
+        <textarea name="body" value='{{body_redux}}'></textarea>
+        <span class="error">{% if body_error != "" %}{{body_error}}{% endif %}</span>
+    
+    <br /><br />
+    <input type="submit" value="Post it!" />
+</form>
+
+{% if posts|length == 0 %}
+<h2>No posts here yet 🤔</h2>
+{% else %}
+{% for post in posts %}
+<hr />
+<h2>{{post.title}}</h2>
+<p>{{post.body}}</p>
+{% endfor %}
+
+{% endif %}
+
+{% endblock %}
