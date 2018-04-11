@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, render_template
+from flask import Flask, request, redirect, render_template, session
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -55,8 +55,8 @@ def add_a_post():
             new_blog = Blog(blog_title, blog_body)
             db.session.add(new_blog)
             db.session.commit()
-            posts = Blog.query.all()
-            return render_template('blog.html', title="My Awesome Dynamic Blog", posts=posts)
+            new_id = new_blog.id
+            return redirect('blog?id={0}.html'.format(new_id))
     else:
         return render_template('newpost.html', title="My Awesome Dynamic Blog", 
             title_redux = "", body_redux = "", title_error=title_error, body_error=body_error)
