@@ -4,4 +4,18 @@
 
 <h2 style="text-align:center;">Add a Blog Entry</h2>
 
+<form method='POST'>
+    <label>Enter the title of your blog post: </label><br />
+        <input type="text" name="title" value='{{title_redux}}' />
+        <span class="error">{% if title_error != "" %}{{title_error}}{% endif %}</span>
+
+    <br /><br />
+    <label>Enter the body of your blog post: </label><br />
+        <textarea name="body" value='{{body_redux}}'></textarea>
+        <span class="error">{% if body_error != "" %}{{body_error}}{% endif %}</span>
+    
+    <br /><br />
+    <input type="submit" value="Post it!" />
+</form>
+
 {% endblock %}

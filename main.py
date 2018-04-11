@@ -16,12 +16,25 @@ class Blog(db.Model):
         self.title = title
         self.body = body
 
+@app.route('/')
+def go_to_home():
+    return redirect('/blog')
+
 @app.route("/blog", methods = ['POST', 'GET'])
 def index():
+    posts = Blog.query.all()
+    if request.method == 'GET':
+        return render_template('blog.html', title="My Awesome Dynamic Blog", posts=posts)
+    
+
+    
+
+@app.route('/newpost', methods = ['POST', 'GET'])
+def add_a_post():
 
     title_error = ""
     body_error = ""
-    posts = Blog.query.all()
+    
     if request.method == 'POST':
         blog_title = request.form['title']
         blog_body = request.form['body']
@@ -31,27 +44,18 @@ def index():
         if blog_body == "":
             body_error = "I need something in the body before posting!"
         if title_error or body_error:
-            return render_template('blog.html', title="My Awesome Dynamic Blog", posts=posts, 
+            return render_template('newpost.html', title="My Awesome Dynamic Blog", 
                 title_redux = blog_title, body_redux = blog_body, title_error=title_error, body_error=body_error)
         else:
             new_blog = Blog(blog_title, blog_body)
             db.session.add(new_blog)
             db.session.commit()
             posts = Blog.query.all()
-            return render_template('blog.html', title="My Awesome Dynamic Blog", posts=posts, 
-                title_redux = "", body_redux = "", title_error=title_error, body_error=body_error)
+            return render_template('blog.html', title="My Awesome Dynamic Blog", posts=posts)
+    else:
+        return render_template('newpost.html', title="My Awesome Dynamic Blog", 
+            title_redux = "", body_redux = "", title_error=title_error, body_error=body_error)
 
-    if request.method == 'GET':
-        return render_template('blog.html', title="My Awesome Dynamic Blog", posts=posts, 
-                title_redux = "", body_redux = "", title_error=title_error, body_error=body_error)
-    
-
-    
-
-@app.route('/newpost', methods = ['GET'])
-def add_a_post():
-
-    return redirect('blog')
 
 if __name__ == '__main__':
     app.run()
