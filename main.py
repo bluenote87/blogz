@@ -20,10 +20,15 @@ class Blog(db.Model):
 def go_to_home():
     return redirect('/blog')
 
-@app.route("/blog", methods = ['POST', 'GET'])
+@app.route("/blog")
 def index():
-    posts = Blog.query.all()
-    if request.method == 'GET':
+    post_id = request.args.get('id')
+    if post_id:
+        post = Blog.query.filter_by(id=post_id).first()
+        return render_template('viewpost.html', post=post,
+            title = "You are viewing a single post")
+    else:
+        posts = Blog.query.all()
         return render_template('blog.html', title="My Awesome Dynamic Blog", posts=posts)
     
 
