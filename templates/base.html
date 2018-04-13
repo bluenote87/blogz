@@ -5,14 +5,139 @@
         <style>
             .error {
                 color: red;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                font-size: 12px;
+                text-align:justify;
+                font-weight: bold;
+            }
+            body{
+                background: linear-gradient(to bottom right, oldlace, azure);
+                background-repeat: no-repeat;
+            }
+            p {
+                padding-top: 25px;
+                padding-right: 30px;
+                padding-bottom: 25px;
+                padding-left: 50px;
+                background-color: #fafafa;
+                border-color: 3px solid grey;
+                border-radius: 5px;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                font-size: 14px;
+                text-align:justify;
+                width: 56%;
+                border-style: inset;
+                margin-top:1px;
+                margin-right:5px;
+                margin-bottom:10px;
+                margin-left:30px;
+                text-transform:capitalize;
+            }
+            h2 {
+                padding-top: 20px;
+                padding-right: 10x;
+                padding-bottom: 20px;
+                padding-left: 30px;
+                background-color:lightblue;
+                border-color: 5px solid lightcoral;
+                border-radius:5px;
+                font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                font-size: 26px;
+                text-align:justify;
+                width:90%;
+                border-style: ridge;
+                margin-top:5px;
+                margin-right:5px;
+                margin-bottom:5px;
+                margin-left:5px;
+                text-transform:uppercase;
+            }
+            hr {
+                margin:auto;
+                color:indigo;
+                width:99%;
+            }
+            a:link {
+                color: green;
+                text-decoration: none;
+            }
+            a:visited {
+                color: purple;
+                text-decoration: none;
+            }
+            a:hover {
+                color: gold;
+                text-decoration: underline;
+            }
+            a:active {
+                color: blue;
+                text-decoration: underline;
+            }
+            div {
+                margin: auto;
+                width: 70%;
+                padding: 10px;
+            }
+            nav {
+                padding-top: 20px;
+                padding-right: 10x;
+                padding-bottom: 20px;
+                padding-left: 30px;
+                background-color:azure;
+                border-color: 5px solid lightcoral;
+                border-radius:5px;
+                font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+                font-size: 18px;
+                text-align:center;
+                width:90%;
+                border-style: ridge;
+                margin-top:10px;
+                margin-right:5px;
+                margin-bottom:5px;
+                margin-left:5px;
+            }
+            label {
+                padding: 5px;
+                font-family:serif;
+                font-size: 20px;
+                text-align:justify;
+                margin:auto;
+            }
+            input {
+                padding: 10px;
+                width: 300px;
+                font-family: 'Courier New', Courier, monospace;
+                font-size: 14px;
+                text-align:justify;
+                margin:auto;
+            }
+            textarea {
+                padding: 10px;
+                width: 500px;
+                height:100px;
+                font-family:'Courier New', Courier, monospace;
+                margin:auto;
+                resize:horizontal
+            }
+            form {
+                background-color:mintcream;
+                border-radius: 20px;
+                padding-left: 100px;
+                padding-top:15px;
+                padding-bottom: 15px;
+                padding-right:15px;
+                width: 85%;
+                border-color: 3px solid grey;
+                border-style: groove;
             }
         </style>
     </head>
     <body>
+        <div>
         <nav>
-            <a href="/blog">Main Blog Page</a>
-            <a href="/newpost">Add a Blog Entry</a>
+            <strong><a href="/blog">Main Blog Page</a>&nbsp;|&nbsp;<a href="/newpost">Add a Blog Entry</a></strong>
         </nav>
+        </div>
         {% block content %}
         {% endblock %}
     </body>

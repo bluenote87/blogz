@@ -2,17 +2,17 @@
 
 {% block content %}
 
-<h2 style="text-align:center;">🐘Build a Blog🧠</h2>
+<div><h2 style="text-align:center;">🐘Build a Blog🧠</h2></div>
 
 
 
 {% if posts|length == 0 %}
-<h2>No posts here yet 🤔</h2>
+<div></div><h2>No posts here yet 🤔</h2></div>
 {% else %}
-{% for post in posts %}
-<hr />
-<h2><a href="/blog?id={{post.id}}">{{post.title}}</a></h2>
-<p>{{post.body}}</p>
+{% for post in posts | reverse %}
+<div><hr /></div>
+<div><h2><a href="/blog?id={{post.id}}">{{post.title}}</a></h2></div>
+<div><p>{{post.body}}</p></div>
 {% endfor %}
 
 {% endif %}

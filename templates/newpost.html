@@ -2,9 +2,9 @@
 
 {% block content %}
 
-<h2 style="text-align:center;">Add a Blog Entry</h2>
+<div><h2 style="text-align:center;">✍️Add a Blog Entry👇</h2></div>
 
-<form method='POST'>
+<div><form method='POST'>
     <label>Enter the title of your blog post: </label><br />
         <input type="text" name="title" value='{{title_redux}}' />
         <span class="error">{% if title_error != "" %}{{title_error}}{% endif %}</span>
@@ -15,7 +15,7 @@
         <span class="error">{% if body_error != "" %}{{body_error}}{% endif %}</span>
     
     <br /><br />
-    <input type="submit" value="Post it!" />
-</form>
+    <input type="submit" value="Post it!" style="width: 100px; text-align: center; font-weight: bold;"/>
+</form></div>
 
 {% endblock %}
