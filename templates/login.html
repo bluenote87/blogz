@@ -2,4 +2,26 @@
 
 {% block content %}
 
+<div><h2>👋Sign Into Your Account⌨️</h2></div>
+
+<div><form action="/login" method='POST'>
+    <table>
+        <tr>
+            <td><label for="username">Username</label></td>
+            <td>
+                <input name="username" type="text" value="{{username}}" />
+            </td>
+        </tr>
+        <tr>
+            <td><label for="password">Password</label></td>
+            <td>
+                <input name="password" type="password">
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="Login">
+</form></div>
+
+<div><p>Don't have an account yet? <a href="/signup">Create an account!</a></p></div>
+
 {% endblock %}

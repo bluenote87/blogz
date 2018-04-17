@@ -1,5 +1,6 @@
 from flask import Flask, request, redirect, render_template, session, flash
 from flask_sqlalchemy import SQLAlchemy
+import re
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -79,17 +80,74 @@ def add_a_post():
 
 @app.route('/signup', methods = ['POST', 'GET'])
 def new_account():
-    # TODO - let users register to the site
-    return ""
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        verify = request.form['verify']
+
+        un_error = ""
+        pw_error = ""
+        pv_error = ""
+
+        existing_user = User.query.filter_by(username=username).first()
+
+        if username == "":
+            un_error = "That's not a valid username"
+        elif len(username) > 120 or len(username) < 3:
+            un_error = "That's not a valid username"
+
+        un_ver = re.search(r'\s|\W', username)
+        if un_ver:
+            un_error = "That's not a valid username"
+
+        if password == "":
+            pw_error = "That's not a valid password"
+        elif len(password) > 60 or len(password) < 3:
+            pw_error = "That's not a valid password"
+
+        if verify == "":
+            pv_error = "Passwords don't match"
+        elif len(verify) > 60 or len(verify) < 3:
+            pv_error = "Passwords don't match"
+        elif verify != password:
+            pv_error = "Passwords don't match"
+
+        if un_error or pw_error or pv_error:
+            return render_template('signup.html', username=username, un_error=un_error, pw_error=pw_error, pv_error=pv_error)
+        else:
+            if not existing_user:
+                new_user = User(username, password)
+                db.session.add(new_user)
+                db.session.commit()
+                session['username'] = username
+                flash("New account activated. Let's celebrate with a new blog post!")
+                return redirect('/newpost')
+            else:
+                flash("That username already exists. Please pick a different name for your account.", 'error')
+                render_template('signup.html')
+    else:
+        render_template('signup.html')
+
 
 
 @app.route('/login', methods = ['POST', 'GET'])
 def log_on():
-    # TODO - let users sign into previously created accounts
-    return ""
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        account = User.query.filter_by(username=username).first()
+        if account and account.password = password:
+            session['username'] = username
+            flash("Hello again. Let's broadcast your thoughts to the world! 📡🌐")
+            return redirect('/newpost')
+        else:
+            flash('User password incorrect, or user does not exist', 'error')
+            render_template('login.html', username=username)
+    else:
+        render_template('login.html')
 
 
-@app.route('/index')
+@app.route('/')
 def index():
     # TODO - show an index page with all users
     return ""
