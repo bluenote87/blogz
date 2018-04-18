@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div><h2 style="text-align:center;">🐘Build a Blog🧠</h2></div>
+<div><h2 style="text-align:center;">🐘Blogz AKA The Posts With The Most🧠</h2></div>
 
 
 
@@ -11,7 +11,8 @@
 {% else %}
 {% for post in posts | reverse %}
 <div><hr /></div>
-<div><h2><a href="/blog?id={{post.id}}">{{post.title}}</a></h2></div>
+<div><h2><a href="/blog?id={{post.id}}">{{post.title}}</a>
+    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 10px"><em>by {{author}}</em></span></h2></div>
 <div><p>{{post.body}}</p></div>
 {% endfor %}
 

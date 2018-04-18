@@ -80,7 +80,7 @@
             }
             nav {
                 padding-top: 20px;
-                padding-right: 10x;
+                padding-right: 30x;
                 padding-bottom: 20px;
                 padding-left: 30px;
                 background-color:azure;
@@ -88,7 +88,6 @@
                 border-radius:5px;
                 font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
                 font-size: 18px;
-                text-align:center;
                 width:90%;
                 border-style: ridge;
                 margin-top:10px;
@@ -105,7 +104,6 @@
             }
             input {
                 padding: 10px;
-                width: 300px;
                 font-family: 'Courier New', Courier, monospace;
                 font-size: 14px;
                 text-align:justify;
@@ -135,17 +133,17 @@
     <body>
         <div>
         <nav>
-            <span style="text-align:left"><strong><a href="/">Home Page</a>&nbsp;|&nbsp;<a href="/blog">View All Posts</a>&nbsp;|&nbsp;<a href="/newpost">Add a Blog Entry</a></strong></span>
-            <span style="text-align:right"><strong><a href="/login">Login</a>&nbsp;|&nbsp;<a href="/logout">Logout</a></strong></span>
+            <span style="text-align:left;"><strong><a href="/">Home Page</a>&nbsp;|&nbsp;<a href="/blog">View All Posts</a>&nbsp;|&nbsp;<a href="/newpost">Add a Blog Entry</a></strong></span>
+            <span style="float:right;"><strong><a href="/login">Login</a>&nbsp;|&nbsp;<a href="/logout">Logout</a></strong>&nbsp;&nbsp;&nbsp;&nbsp;</span>
         </nav>
         </div>
         
         {% with messages = get_flashed_messages(with_categories = True) %}
-        <ul>
+        <div><ul>
             {% for category,message in messages %}
                 <li class="{{category}}">{{message}}</li>
             {% endfor %}
-        </ul>
+        </ul></div>
         {% endwith %}
 
         {% block content %}

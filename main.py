@@ -36,13 +36,21 @@ class User(db.Model):
     def __repr__(self):
         return "<User %r>" % self.username
 
+@app.before_request
+def require_login():
+    allowed_routes = ['log_on', 'new_account', 'index', 'view_a_post']
+    if request.endpoint not in allowed_routes and 'username' not in session:
+        return redirect('/login')
+
 @app.route("/blog")
 def view_a_post():
     post_id = request.args.get('id')
     if post_id:
         post = Blog.query.filter_by(id=post_id).first()
-        return render_template('viewpost.html', post=post,
+        author = post.owner
+        return render_template('viewpost.html', post=post, author=author.__class__.__name__,
             title = "You are viewing a single post")
+            # TODO - fix the author name attribute to show as a string, not an object
     else:
         posts = Blog.query.all()
         return render_template('blog.html', title="My Awesome Dynamic Blog", posts=posts)
@@ -124,9 +132,9 @@ def new_account():
                 return redirect('/newpost')
             else:
                 flash("That username already exists. Please pick a different name for your account.", 'error')
-                render_template('signup.html')
+                return render_template('signup.html')
     else:
-        render_template('signup.html')
+        return render_template('signup.html')
 
 
 
@@ -136,21 +144,26 @@ def log_on():
         username = request.form['username']
         password = request.form['password']
         account = User.query.filter_by(username=username).first()
-        if account and account.password = password:
+        if account and account.password == password:
             session['username'] = username
             flash("Hello again. Let's broadcast your thoughts to the world! 📡🌐")
             return redirect('/newpost')
         else:
             flash('User password incorrect, or user does not exist', 'error')
-            render_template('login.html', username=username)
+            return render_template('login.html', username=username)
     else:
-        render_template('login.html')
+        return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    del session['username']
+    return redirect('/blog')
 
 
 @app.route('/')
 def index():
     # TODO - show an index page with all users
-    return ""
+    return render_template('index.html')
 
 
 if __name__ == '__main__':
