@@ -46,9 +46,8 @@ def require_login():
 def view_a_post():
     post_id = request.args.get('id')
     if post_id:
-        post = Blog.query.filter_by(id=post_id).first()
-        author = post.owner
-        return render_template('viewpost.html', post=post, author=author.__class__.__name__,
+        posts = Blog.query.filter_by(id=post_id).first()
+        return render_template('viewpost.html', posts=posts,
             title = "You are viewing a single post")
             # TODO - fix the author name attribute to show as a string, not an object
     else:

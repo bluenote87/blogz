@@ -2,9 +2,9 @@
 
 {% block content %}
 
-<div><h2 style="text-align:center;">{{post.title}}</h2>
-    <p><span style="font-size: 10px"><em>by {{author}}</em></span></p></div>
+<div><h2 style="text-align:center;">{{posts.title}}
+    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 11px"><em>by {{posts.owner.username}}</em></span></h2></div>
 
-<div><p>{{post.body}}</p></div>
+<div><p>{{posts.body}}</p></div>
 
 {% endblock %}
