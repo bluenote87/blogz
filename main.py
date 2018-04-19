@@ -45,11 +45,16 @@ def require_login():
 @app.route("/blog")
 def view_a_post():
     post_id = request.args.get('id')
+    user_id = request.args.get('user')
     if post_id:
         posts = Blog.query.filter_by(id=post_id).first()
         return render_template('viewpost.html', posts=posts,
             title = "You are viewing a single post")
-            # TODO - fix the author name attribute to show as a string, not an object
+    elif user_id:
+        posts = Blog.query.filter_by(owner_id=user_id).all()
+        author = User.query.filter_by(id=user_id).first()
+        return render_template('singleUser.html', posts=posts, author=author,
+            title = "Now viewing all posts by a single author")
     else:
         posts = Blog.query.all()
         return render_template('blog.html', title="My Awesome Dynamic Blog", posts=posts)
@@ -161,8 +166,8 @@ def logout():
 
 @app.route('/')
 def index():
-    # TODO - show an index page with all users
-    return render_template('index.html')
+    authors = User.query.all()
+    return render_template('index.html', authors=authors)
 
 
 if __name__ == '__main__':

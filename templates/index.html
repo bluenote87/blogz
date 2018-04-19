@@ -2,6 +2,12 @@
 
 {% block content %}
 
-<div><h2>This page is under construction</h2></div>
+<div><h2 style="text-align:center;">⛳Contributors to Blogz😍</h2></div>
+
+<div><ul>
+{% for author in authors %}
+    <li><a href="/blog?user={{author.id}}">{{author.username}}</a></li>
+{% endfor %}
+</ul></div>
 
 {% endblock %}

@@ -3,7 +3,7 @@
 {% block content %}
 
 <div><h2 style="text-align:center;">{{posts.title}}
-    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 11px"><em>by {{posts.owner.username}}</em></span></h2></div>
+    <br><span style="font-size: 11px"><em>by <a href="/blog?user={{posts.owner.id}}">{{posts.owner.username}}</a></em></span></h2></div>
 
 <div><p>{{posts.body}}</p></div>
 
