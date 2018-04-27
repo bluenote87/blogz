@@ -1,6 +1,7 @@
 from flask import Flask, request, redirect, render_template, session, flash
 from flask_sqlalchemy import SQLAlchemy
 import re
+from hashutils import make_pw_hash, check_pw_hash
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -26,12 +27,12 @@ class Blog(db.Model):
 class User(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(120), unique = True)
-    password = db.Column(db.String(60))
+    pw_hash = db.Column(db.String(120))
     blogs = db.relationship('Blog', backref='owner')
 
     def __init__(self, username, password):
         self.username = username
-        self.password = password
+        self.pw_hash = make_pw_hash(password)
 
     def __repr__(self):
         return "<User %r>" % self.username
@@ -148,7 +149,7 @@ def log_on():
         username = request.form['username']
         password = request.form['password']
         account = User.query.filter_by(username=username).first()
-        if account and account.password == password:
+        if account and check_pw_hash(password,account.pw_hash):
             session['username'] = username
             flash("Hello again. Let's broadcast your thoughts to the world! 📡🌐")
             return redirect('/newpost')
@@ -161,6 +162,7 @@ def log_on():
 @app.route('/logout')
 def logout():
     del session['username']
+    flash("You have signed out of your account. ✈️")
     return redirect('/blog')
 
 

@@ -12,7 +12,7 @@
 {% for post in posts | reverse %}
 <div><hr /></div>
 <div><h2><a href="/blog?id={{post.id}}">{{post.title}}</a>
-    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 11px"><em>by <a href="/blog?user={{post.owner.id}}">{{post.owner.username}}</a></em></span></h2></div>
+    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 12px"><em>A post written by <a href="/blog?user={{post.owner.id}}">{{post.owner.username}}</a></em></span></h2></div>
 <div><p>{{post.body}}</p></div>
 {% endfor %}
 

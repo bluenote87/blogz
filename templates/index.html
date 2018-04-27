@@ -4,10 +4,14 @@
 
 <div><h2 style="text-align:center;">⛳Contributors to Blogz😍</h2></div>
 
+{% if authors|length == 0 %}
+<div><h2>No contributors here yet 🤔</h2></div>
+{% else %}
 <div><ul>
 {% for author in authors %}
     <li><a href="/blog?user={{author.id}}">{{author.username}}</a></li>
 {% endfor %}
 </ul></div>
+{% endif %}
 
 {% endblock %}
