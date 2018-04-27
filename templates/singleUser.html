@@ -4,10 +4,10 @@
 
 <div><h2 style="text-align:center;">🦄Every post made by the esteemed author {{author.username}}🤩</h2></div>
 
-{% if posts|length == 0 %}
+{% if not posts.items %}
 <div><h2>{{author.username}} hasn't posted anything yet 😿</h2></div>
 {% else %}
-{% for post in posts | reverse %}
+{% for post in posts.items %}
 <div><h2>{{post.title}}</h2></div>
 
 <div><p>{{post.body}}</p></div>

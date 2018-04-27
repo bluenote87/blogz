@@ -6,10 +6,30 @@
 
 
 
-{% if posts|length == 0 %}
+{% if not posts.items %}
 <div><h2>No posts here yet 🤔</h2></div>
 {% else %}
-{% for post in posts | reverse %}
+<!-- {% macro render_pagination(posts, endpoint) %}
+    {%- for page in posts.iter_pages() | reverse %}
+        {% if page %}
+            {% if page != posts.page %}
+                <a href="{{ url_for(endpoint, page=page) }}">{{ page }}</a>
+            {% else %}
+                <div><hr /></div>
+                    <div><h2><a href="/blog?id={{post.id}}">{{post.title}}</a>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 12px">
+                        <em>A post written by <a href="/blog?user={{post.owner.id}}">{{post.owner.username}}</a></em>
+                    </span></h2>
+                </div>
+                <div><p>{{post.body}}</p></div>
+            {% endif %}
+        {% else %}
+            <span class=ellipsis>…</span>
+        {% endif %}
+    {%- endfor %}
+ {% endmacro %} -->
+
+{% for post in posts.items | reverse %}
 <div><hr /></div>
 <div><h2><a href="/blog?id={{post.id}}">{{post.title}}</a>
     <br>&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 12px"><em>A post written by <a href="/blog?user={{post.owner.id}}">{{post.owner.username}}</a></em></span></h2></div>

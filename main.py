@@ -47,17 +47,22 @@ def require_login():
 def view_a_post():
     post_id = request.args.get('id')
     user_id = request.args.get('user')
+    present_page = request.args.get('p')
     if post_id:
         posts = Blog.query.filter_by(id=post_id).first()
         return render_template('viewpost.html', posts=posts,
             title = "You are viewing a single post")
     elif user_id:
-        posts = Blog.query.filter_by(owner_id=user_id).all()
+        if not present_page:
+            present_page = 1
+        posts = Blog.query.filter_by(owner_id=user_id).paginate(page=present_page, per_page=5, error_out=False)
         author = User.query.filter_by(id=user_id).first()
         return render_template('singleUser.html', posts=posts, author=author,
             title = "Now viewing all posts by a single author")
     else:
-        posts = Blog.query.all()
+        if not present_page:
+            present_page = 1
+        posts = Blog.query.paginate(page=present_page, per_page=5, error_out=False)
         return render_template('blog.html', title="My Awesome Dynamic Blog", posts=posts)
     
 
