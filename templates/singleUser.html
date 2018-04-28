@@ -7,11 +7,24 @@
 {% if not posts.items %}
 <div><h2>{{author.username}} hasn't posted anything yet 😿</h2></div>
 {% else %}
-{% for post in posts.items %}
-<div><h2>{{post.title}}</h2></div>
+{% for post in posts.items | reverse %}
+<div><h2><a href="/blog?id={{post.id}}">{{post.title}}</a></h2></div>
 
 <div><p>{{post.body}}</p></div>
 {% endfor %}
+
+<div><h2>
+{% for page in posts.iter_pages() %}
+
+    {% if page %}
+
+        <a href="/blog?user={{author.id}}&p={{page}}">{{ page }}</a>
+    {% else %}
+        ...
+    {% endif %}
+
+{% endfor %}
+</h2></div>
 
 {% endif %}
 

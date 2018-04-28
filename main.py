@@ -47,22 +47,20 @@ def require_login():
 def view_a_post():
     post_id = request.args.get('id')
     user_id = request.args.get('user')
-    present_page = request.args.get('p')
+    page_num = request.args.get('p')
+    if page_num:
+        page_num = int(page_num)
     if post_id:
         posts = Blog.query.filter_by(id=post_id).first()
         return render_template('viewpost.html', posts=posts,
             title = "You are viewing a single post")
     elif user_id:
-        if not present_page:
-            present_page = 1
-        posts = Blog.query.filter_by(owner_id=user_id).paginate(page=present_page, per_page=5, error_out=False)
+        posts = Blog.query.filter_by(owner_id=user_id).paginate(page=page_num, per_page=5, error_out=False)
         author = User.query.filter_by(id=user_id).first()
         return render_template('singleUser.html', posts=posts, author=author,
             title = "Now viewing all posts by a single author")
     else:
-        if not present_page:
-            present_page = 1
-        posts = Blog.query.paginate(page=present_page, per_page=5, error_out=False)
+        posts = Blog.query.paginate(page=page_num, per_page=5, error_out=False)
         return render_template('blog.html', title="My Awesome Dynamic Blog", posts=posts)
     
 
@@ -138,10 +136,10 @@ def new_account():
                 db.session.add(new_user)
                 db.session.commit()
                 session['username'] = username
-                flash("New account activated. Let's celebrate with a new blog post!")
+                flash("New account activated. Let's celebrate with a new blog post! 🎉")
                 return redirect('/newpost')
             else:
-                flash("That username already exists. Please pick a different name for your account.", 'error')
+                flash("🚫 That username already exists. Please pick a different name for your account.", 'error')
                 return render_template('signup.html')
     else:
         return render_template('signup.html')
